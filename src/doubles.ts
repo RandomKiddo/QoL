@@ -4,12 +4,3 @@
  */
 
 "use strict";
-
-class float16 {
-};
-
-class float32 {
-};
-
-class float64 {
-};
