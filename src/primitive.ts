@@ -5,9 +5,17 @@
 
 "use strict";
 
+/**
+ * represents a primitive data type of which other types are created on
+ * the class is abstract, and cannot be instantiated
+ */
 abstract class primitive {
     protected value: number;
 
+    /**
+     * @param value The value to instantiate to
+     * Parent constructor to all primitives
+     */
     constructor(value: number) {
         this.value = value;
     }
@@ -25,10 +33,19 @@ abstract class primitive {
     abstract modEquals(obj: primitive | number): void;
     protected abstract updateCheck(): void;
     
+    /**
+     * @return This primitive in number form
+     * Tranforms this primitive into a number
+     */
     toNumber(): number {
         return this.value;
     }
 
+    /**
+     * @param obj The object to check
+     * @return A boolean representing the inequality
+     * Checks if this primitive is greater than the other
+     */
     greaterThan(obj: primitive | number): boolean {
         if (obj instanceof primitive) {
             return this.value > obj.toNumber();
@@ -37,6 +54,11 @@ abstract class primitive {
         }
     }
 
+    /**
+     * @param obj The object to check
+     * @return A boolean representing the inequality
+     * Checks if this primitive is greater than or equal to the other
+     */
     greaterThanOrEqual(obj: primitive | number): boolean {
         if (obj instanceof primitive) {
             return this.value >= obj.toNumber();
@@ -45,6 +67,11 @@ abstract class primitive {
         }
     }
 
+    /**
+     * @param obj The object to check
+     * @return A boolean representing the inequality
+     * Checks if this primitive is less than the other
+     */
     lessThan(obj: primitive | number): boolean {
         if (obj instanceof primitive) {
             return this.value < obj.toNumber();
@@ -53,6 +80,11 @@ abstract class primitive {
         }
     }
 
+    /**
+     * @param obj The object to check
+     * @return A boolean representing the inequality
+     * Checks if this primitive is less than or equal to the other
+     */
     lessThanOrEqual(obj: primitive | number): boolean {
         if (obj instanceof primitive) {
             return this.value <= obj.toNumber();
@@ -61,6 +93,11 @@ abstract class primitive {
         }
     }
 
+    /**
+     * @param obj The object to check
+     * @return A boolean representing the inequality
+     * Checks if this primitive is equal to the other
+     */
     equals(obj: primitive | number): boolean {
         if (obj instanceof primitive) {
             return this.value.toString() === obj.toString();
@@ -69,6 +106,10 @@ abstract class primitive {
         }
     }
 
+    /**
+     * @return A boolean representing the not
+     * Returns true if this primitive is null or NaN
+     */
     not(): boolean {
         if (this.value === null || isNaN(this.value)) {
             return true;

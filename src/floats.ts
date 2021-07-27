@@ -8,8 +8,152 @@
 class float16 {
 };
 
-class float32 {
+class float32 extends primitive { // 7
+    public static readonly MAX_VALUE: float32 = new float32((2-(2**-23)*(2**127)));
+    public static readonly MIN_VALUE: float32 = new float32(2**-149);
+
+    constructor(value: number) {
+        if (value > float32.MAX_VALUE.value) {
+            value = float32.MAX_VALUE.value;
+            console.warn("float32 cannot surpass MAX_VALUE; converting to MAX_VALUE");
+        } else if (value < float32.MIN_VALUE.value) {
+            value = float32.MIN_VALUE.value;
+            console.warn("float32 cannot surpass MIN_VALUE; converting to MIN_VALUE");
+        }
+        super(value);
+        this.updateCheck();
+    }
+
+    toString(): string {
+        this.updateCheck();
+        return this.value.toString();
+    }
+
+    plus(obj: primitive | number): float32 {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            return new float32(this.value + obj.toNumber());
+        } else {
+            return new float32(this.value + obj);
+        }
+    }
+
+    plusEquals(obj: primitive | number): void {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            this.value += obj.toNumber();
+        } else {
+            this.value += obj;
+        }
+        this.updateCheck();
+    }
+
+    minus(obj: primitive | number): float32 {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            return new float32(this.value - obj.toNumber());
+        } else {
+            return new float32(this.value - obj);
+        }
+    }
+
+    minusEquals(obj: primitive | number): void {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            this.value -= obj.toNumber();
+        } else {
+            this.value -= obj;
+        }
+        this.updateCheck();
+    }
+
+    multiply(obj: primitive | number): float32 {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            return new float32(this.value * obj.toNumber());
+        } else {
+            return new float32(this.value * obj);
+        }
+    }
+
+    multiplyEquals(obj: primitive | number): void {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            this.value *= obj.toNumber();
+        } else {
+            this.value *= obj;
+        }
+        this.updateCheck();
+    }
+
+    divide(obj: primitive | number): float32 {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            return new float32(this.value / obj.toNumber());
+        } else {
+            return new float32(this.value / obj);
+        }
+    }
+
+    divideEquals(obj: primitive | number): void {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            this.value /= obj.toNumber();
+        } else {
+            this.value /= obj;
+        }
+        this.updateCheck();
+    }
+
+    mod(obj: primitive | number): float32 {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            return new float32(this.value % obj.toNumber());
+        } else {
+            return new float32(this.value % obj);
+        }
+    }
+
+    modEquals(obj: primitive | number): void {
+        this.updateCheck();
+        if (obj instanceof primitive) {
+            this.value %= obj.toNumber();
+        } else {
+            this.value %= obj;
+        }
+        this.updateCheck();
+    }
+
+    protected updateCheck(): void {
+        if (this.value > float32.MAX_VALUE.value) {
+            this.value = float32.MAX_VALUE.value;
+            console.warn("float32 cannot surpass MAX_VALUE; converting to MAX_VALUE");
+        } else if (this.value < float32.MIN_VALUE.value) {
+            this.value = float32.MIN_VALUE.value;
+            console.warn("float32 cannot surpass MIN_VALUE; converting to MIN_VALUE");
+        }
+        let str: string = this.toString();
+        try {
+            let index: number = str.substring(str.indexOf("." + 1)).length;
+            let processed: string = "";
+            let count: number = 0;
+            if (index > 7) {
+                for (let i: number = 0; i < str.length; ++i) {
+                    let c: string = str.charAt(i);
+                    if (i > index && count !== 7) {
+                        processed += c;
+                        ++count;
+                    } else { processed += c; }
+                }
+                console.warn("float32 cannot surpass precision level 7");
+            }
+            this.value = parseFloat(processed);
+        } catch (err: any) { /* do nothing */ }
+    }
 };
 
-class float64 {
+class float64 { // 15
+};
+
+class float128 {
 };
