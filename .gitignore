@@ -3,3 +3,8 @@
 
 # VSCode
 *.code-workspace
+
+# Executables
+*.app
+*.out
+*.exe
